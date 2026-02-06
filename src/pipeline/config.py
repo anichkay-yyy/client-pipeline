@@ -49,8 +49,8 @@ class Settings(BaseSettings):
     classification_min_relevance: float = 0.6
     classification_target_stacks: list[str] = Field(default_factory=list)
 
-    llm_model: str = "anthropic/claude-sonnet-4"
-    llm_fallback_model: str = "openai/gpt-4o"
+    llm_model: str = "z-ai/glm-4.5-air:free"
+    llm_fallback_model: str = "z-ai/glm-4.5-air:free"
     llm_temperature: float = 0.7
     llm_max_tokens: int = 500
 
@@ -103,8 +103,7 @@ class Settings(BaseSettings):
             kwargs["classification_target_stacks"] = cl.get("target_stacks", [])
 
             llm = cfg.get("llm", {})
-            kwargs["llm_model"] = llm.get("model", "anthropic/claude-sonnet-4")
-            kwargs["llm_fallback_model"] = llm.get("fallback_model", "openai/gpt-4o")
+            # model/fallback_model come from .env; only load temperature/max_tokens from YAML
             kwargs["llm_temperature"] = llm.get("temperature", 0.7)
             kwargs["llm_max_tokens"] = llm.get("max_tokens", 500)
 

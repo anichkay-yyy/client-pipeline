@@ -23,8 +23,6 @@ classification:
     - "automation"
 
 llm:
-  model: "anthropic/claude-sonnet-4"
-  fallback_model: "openai/gpt-4o"
   temperature: 0.7
   max_tokens: 500
 
