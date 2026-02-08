@@ -95,7 +95,12 @@ async def main() -> None:
     await responder.init()
 
     # Notifier bot
-    notifier = Notifier(settings.notify_bot_token, settings.notify_chat_id)
+    notifier = Notifier(
+        settings.notify_bot_token,
+        settings.notify_chat_id,
+        settings.telegram_api_id,
+        settings.telegram_api_hash,
+    )
 
     # Orchestrator (create before start so we can register commands)
     orch = Orchestrator(

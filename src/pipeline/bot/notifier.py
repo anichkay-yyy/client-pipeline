@@ -14,9 +14,11 @@ StatusHandler = Callable[[], Awaitable[str]]
 class Notifier:
     """Sends notifications and handles status commands via a Telegram bot."""
 
-    def __init__(self, bot_token: str, chat_id: int) -> None:
+    def __init__(self, bot_token: str, chat_id: int, api_id: int, api_hash: str) -> None:
         self._bot_token = bot_token
         self._chat_id = chat_id
+        self._api_id = api_id
+        self._api_hash = api_hash
         self._bot: TelegramClient | None = None
         self._command_handlers: dict[str, StatusHandler] = {}
 
@@ -25,7 +27,7 @@ class Notifier:
         self._command_handlers[command] = handler
 
     async def start(self) -> None:
-        self._bot = TelegramClient(StringSession(), api_id=0, api_hash="")
+        self._bot = TelegramClient(StringSession(), api_id=self._api_id, api_hash=self._api_hash)
         await self._bot.start(bot_token=self._bot_token)
         logger.info("Notifier bot started, target chat=%d", self._chat_id)
 
